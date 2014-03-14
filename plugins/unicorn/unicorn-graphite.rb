@@ -20,10 +20,10 @@ class CheckUnicornExhaustion < Sensu::Plugin::Metric::CLI::Graphite
     response = Net::HTTP.get('127.0.0.1', '/_raindrops')
     calling, writing, active, queued = response.split("\n").map { |line| line.split(":").last.to_i }
 
-    output "#{config[:scheme]}.general.calling", calling
-    output "#{config[:scheme]}.general.writing", writing
-    output "#{config[:scheme]}.general.active", active
-    output "#{config[:scheme]}.general.queued", queued
+    output "#{config[:scheme]}.unicorn.calling", calling
+    output "#{config[:scheme]}.unicorn.writing", writing
+    output "#{config[:scheme]}.unicorn.active", active
+    output "#{config[:scheme]}.unicorn.queued", queued
     ok
   end
 end
