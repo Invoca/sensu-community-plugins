@@ -45,12 +45,11 @@ class CheckRAM < Sensu::Plugin::Check::CLI
          default: 5
 
   def run
-    memhash = {}
     meminfo = File.read('/proc/meminfo')
-    meminfo.each_line do |i|
+    memhash = meminfo.each_line.with_object({}) do |i, hash|
       key, val = i.split(':')
       val = val.include?('kB') ? val.gsub(/\s+kB/, '') : val
-      memhash[key.to_s] = val.strip
+      hash[key.to_s] = val.strip
     end
 
     total_ram = (memhash['MemTotal'].to_i << 10) >> 20
